@@ -1,9 +1,9 @@
 package controllers
 
 import (
+	"DevBook/api/src/banco"
 	"DevBook/api/src/modelos"
 	"DevBook/api/src/repositorios"
-	"course-otavio/24 - Crud Básico/banco"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
