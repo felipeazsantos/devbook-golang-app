@@ -5,6 +5,7 @@ import (
 	"DevBook/api/src/repositorios"
 	"course-otavio/24 - Crud Básico/banco"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -29,7 +30,11 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	}
 
 	repositorio := repositorios.NovoRepositorioDeUsuario(db)
-	repositorio.Criar(usuario)
+	usuarioId, erro := repositorio.Criar(usuario)
+	if erro != nil {
+		log.Fatal(erro)
+	}
+	w.Write([]byte(fmt.Sprintf("Usuário inserido com sucesso! Id: %d", usuarioId)))
 }
 
 // BuscarUsuarios retorna todos os usuário do banco de dados
