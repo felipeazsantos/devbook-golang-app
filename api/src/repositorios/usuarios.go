@@ -39,7 +39,7 @@ func (repositorio usuarios) Criar(usuario modelos.Usuario) (uint64, error) {
 	return uint64(ultimoIdInserido), nil
 }
 
-// Buscar trás todos os usuários que atendem um filtro de nome ou nick
+// Buscar tráz todos os usuários que atendem um filtro de nome ou nick
 func (repositorio usuarios) Buscar(nomeOuNick string) ([]modelos.Usuario, error) {
 	nomeOuNick = fmt.Sprintf("%%%s%%", nomeOuNick) // %nomeOuNick%
 
@@ -63,4 +63,30 @@ func (repositorio usuarios) Buscar(nomeOuNick string) ([]modelos.Usuario, error)
 	}
 
 	return usuariosResult, nil
+}
+
+// BuscarPorId tráz um usuário do banco de dados
+func (repositorio usuarios) BuscarPorID(id uint64) (modelos.Usuario, error) {
+	linhas, erro := repositorio.db.Query(
+		"select id, nome, nick, email, CriadoEm from usuarios where id = ?", id)
+	if erro != nil {
+		return modelos.Usuario{}, erro
+	}
+	defer linhas.Close()
+
+	var usuario modelos.Usuario
+
+	if linhas.Next() {
+		if erro = linhas.Scan(
+			&usuario.ID,
+			&usuario.Nome,
+			&usuario.Nick,
+			&usuario.Email,
+			&usuario.CriadoEm);
+		   erro != nil {
+			return modelos.Usuario{}, erro
+		}
+	}
+
+	return usuario, nil
 }
