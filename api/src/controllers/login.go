@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"DevBook/api/autenticacao"
 	"DevBook/api/seguranca"
 	"DevBook/api/src/banco"
 	"DevBook/api/src/modelos"
@@ -44,5 +45,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Write([]byte("Você está logado! parabéns!"))
+	token, _ := autenticacao.CriarToken(usuarioSalvoNoBanco.ID)
+
+	respostas.JSON(w, http.StatusOK, token)
 }
