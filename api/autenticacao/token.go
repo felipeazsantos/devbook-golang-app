@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 	"errors"
+	"strconv"
 )
 
 //CriarToken gera uma string de autenticação com permissões para determinado usuário
@@ -33,6 +34,26 @@ func ValidarToken(r *http.Request) error {
 	}
 
 	return errors.New("Token inválido")
+}
+
+//ExtrairUsuarioID retorna o usuarioID que está salvo no token
+func ExtrairUsuarioID(r *http.Request) (uint64, error) {
+	tokenSring := extrairToken(r)
+	token, erro := jwt.Parse(tokenSring, retornarChaveDeVerificacao)
+	if erro != nil {
+		return 0, erro
+	}
+
+	if permissoes, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		usuarioId, erro := strconv.ParseUint(fmt.Sprintf("%.0f", permissoes["usuarioId"]) , 10, 64)
+		if erro != nil {
+			return usuarioId, erro
+		}
+
+		return usuarioId, nil
+	}
+
+	return 0, errors.New("Token Inválido")
 }
 
 func extrairToken(r *http.Request) string {
