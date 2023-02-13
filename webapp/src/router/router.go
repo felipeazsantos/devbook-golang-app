@@ -1,8 +1,13 @@
 package router
 
-import "github.com/gorilla/mux"
+import (
+	"DevBook/webapp/src/router/rotas"
+	"github.com/gorilla/mux"
+)
 
 //Gerar retorna um router com todas as rotas configuradas
 func Gerar() *mux.Router {
-	return nil
+	router := mux.NewRouter()
+	rotas.Configurar(router)
+	return router
 }
