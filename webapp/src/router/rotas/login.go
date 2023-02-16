@@ -1,7 +1,7 @@
 package rotas
 
 import (
-	"DevBook/webapp/src/controllers"
+	"devbook-golang-app/webapp/src/controllers"
 	"net/http"
 )
 

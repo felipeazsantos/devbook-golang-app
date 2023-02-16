@@ -1,8 +1,8 @@
 package main
 
 import (
-	"DevBook/webapp/src/router"
-	"DevBook/webapp/src/utils"
+	"devbook-golang-app/webapp/src/router"
+	"devbook-golang-app/webapp/src/utils"
 	"fmt"
 	"log"
 	"net/http"
