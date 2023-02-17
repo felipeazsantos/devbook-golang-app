@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	"DevBook/api/autenticacao"
-	"DevBook/api/src/respostas"
+	"devbook-golang-app/api/autenticacao"
+	"devbook-golang-app/api/src/respostas"
 	"log"
 	"net/http"
 )

@@ -1,7 +1,7 @@
 package banco
 
 import (
-	"DevBook/api/src/config"
+	"devbook-golang-app/api/src/config"
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 )

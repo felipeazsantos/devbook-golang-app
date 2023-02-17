@@ -1,7 +1,7 @@
 package router
 
 import (
-	"DevBook/api/src/router/rotas"
+	"devbook-golang-app/api/src/router/rotas"
 	"github.com/gorilla/mux"
 )
 

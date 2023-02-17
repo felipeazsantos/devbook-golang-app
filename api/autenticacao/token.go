@@ -1,7 +1,7 @@
 package autenticacao
 
 import (
-	"DevBook/api/src/config"
+	"devbook-golang-app/api/src/config"
 	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"net/http"

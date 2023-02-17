@@ -1,8 +1,8 @@
 package main
 
 import (
-	"DevBook/api/src/config"
-	"DevBook/api/src/router"
+	"devbook-golang-app/api/src/config"
+	"devbook-golang-app/api/src/router"
 	"fmt"
 	"log"
 	"net/http"

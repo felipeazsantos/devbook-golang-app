@@ -1,7 +1,7 @@
 package rotas
 
 import (
-	"DevBook/api/middlewares"
+	"devbook-golang-app/api/middlewares"
 	"github.com/gorilla/mux"
 	"net/http"
 )

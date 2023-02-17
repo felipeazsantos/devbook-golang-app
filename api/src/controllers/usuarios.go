@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"DevBook/api/autenticacao"
-	"DevBook/api/seguranca"
-	"DevBook/api/src/banco"
-	"DevBook/api/src/modelos"
-	"DevBook/api/src/repositorios"
-	"DevBook/api/src/respostas"
+	"devbook-golang-app/api/autenticacao"
+	"devbook-golang-app/api/seguranca"
+	"devbook-golang-app/api/src/banco"
+	"devbook-golang-app/api/src/modelos"
+	"devbook-golang-app/api/src/repositorios"
+	"devbook-golang-app/api/src/respostas"
 	"encoding/json"
 	"errors"
 	"github.com/gorilla/mux"

@@ -1,7 +1,7 @@
 package repositorios
 
 import (
-	"DevBook/api/src/modelos"
+	"devbook-golang-app/api/src/modelos"
 	"database/sql"
 )
 
