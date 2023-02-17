@@ -1,7 +1,7 @@
 package modelos
 
 import (
-	"DevBook/api/seguranca"
+	"devbook-golang-app/api/seguranca"
 	"errors"
 	"github.com/badoux/checkmail"
 	"strings"

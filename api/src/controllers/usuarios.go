@@ -257,7 +257,7 @@ func PararDeSeguirUsuario(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	repositorio := repositorios.NovoRepositorioDeUsuario(db)
-	if erro = repositorio.PararDeSeguir(usuarioId, SeguidorId); erro != nil {
+	if erro = repositorio.PararDeSeguir(usuarioId, seguidorId); erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}

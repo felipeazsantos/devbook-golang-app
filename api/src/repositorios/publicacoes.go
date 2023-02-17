@@ -89,7 +89,7 @@ func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, e
 			&publicacao.AutorID,
 			&publicacao.Curtidas,
 			&publicacao.CriadaEm,
-			&publicacao.AutorNick
+			&publicacao.AutorNick,
 			); erro != nil {
 			return nil, erro
 		}
@@ -157,7 +157,7 @@ func (repositorio Publicacoes) BuscarPorUsuario(usuarioId uint64) ([]modelos.Pub
 			&publicacao.AutorID,
 			&publicacao.Curtidas,
 			&publicacao.CriadaEm,
-			&publicacao.AutorNick
+			&publicacao.AutorNick,
 		); erro != nil {
 			return nil, erro
 		}
@@ -185,7 +185,7 @@ func (repositorio Publicacoes) Curtir(publicacaoID uint64) error {
 }
 
 //Descurtir remove uma curtida na publicação
-func (repositorio Publicacoes) Curtir(publicacaoID uint64) error {
+func (repositorio Publicacoes) Descurtir(publicacaoID uint64) error {
 	statement, erro := repositorio.db.Prepare(`
 	update publicacoes set curtidas =
     CASE 
