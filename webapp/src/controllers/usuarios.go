@@ -2,9 +2,8 @@ package controllers
 
 import (
 	"bytes"
+	"devbook-golang-app/webapp/src/respostas"
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -19,14 +18,21 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 		"senha": r.FormValue("senha"),
 	})
 	if erro != nil {
-		log.Fatal(erro)
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro : erro.Error()})
+		return
 	}
 
 	response,erro := http.Post("http://localhost:5000/usuarios", "application/json", bytes.NewBuffer(usuario))
 	if erro != nil {
-		log.Fatal(erro)
+		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro : erro.Error()})
+		return
 	}
 	defer response.Body.Close()
 
-	fmt.Println(response.Body)
+	if response.StatusCode >= 400 {
+		respostas.TratarStatusCodeDeErro(w, response)
+		return
+	}
+
+	respostas.JSON(w, response.StatusCode, nil)
 }
