@@ -3,6 +3,7 @@ package controllers
 import (
 	"bytes"
 	"devbook-golang-app/webapp/src/config"
+	"devbook-golang-app/webapp/src/cookies"
 	"devbook-golang-app/webapp/src/modelos"
 	"devbook-golang-app/webapp/src/respostas"
 	"encoding/json"
@@ -42,4 +43,11 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
+
+	if erro = cookies.Salvar(w, dadosAutenticacao.ID, dadosAutenticacao.Token); erro != nil {
+		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
+		return
+	}
+
+	respostas.JSON(w, http.StatusOK, nil)
 }

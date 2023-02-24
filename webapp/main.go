@@ -2,6 +2,7 @@ package main
 
 import (
 	"devbook-golang-app/webapp/src/config"
+	"devbook-golang-app/webapp/src/cookies"
 	"devbook-golang-app/webapp/src/router"
 	"devbook-golang-app/webapp/src/utils"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 
 func main() {
 	config.Carregar()
+	cookies.Configurar()
 	utils.CarregarTemplates()
 	r := router.Gerar()
 
