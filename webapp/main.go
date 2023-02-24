@@ -1,6 +1,7 @@
 package main
 
 import (
+	"devbook-golang-app/webapp/src/config"
 	"devbook-golang-app/webapp/src/router"
 	"devbook-golang-app/webapp/src/utils"
 	"fmt"
@@ -9,9 +10,10 @@ import (
 )
 
 func main() {
+	config.Carregar()
 	utils.CarregarTemplates()
 	r := router.Gerar()
 
-	fmt.Println("Escutando na porta 3000...")
-	log.Fatal(http.ListenAndServe(":3000", r))
+	fmt.Printf("Escutando na porta %d\n", config.Porta)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Porta), r))
 }

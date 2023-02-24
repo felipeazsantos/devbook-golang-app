@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"bytes"
+	"devbook-golang-app/webapp/src/config"
 	"devbook-golang-app/webapp/src/respostas"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -22,7 +24,8 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response,erro := http.Post("http://localhost:5000/usuarios", "application/json", bytes.NewBuffer(usuario))
+	url := fmt.Sprintf("%s/usuarios", config.APIUrl)
+	response,erro := http.Post(url, "application/json", bytes.NewBuffer(usuario))
 	if erro != nil {
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro : erro.Error()})
 		return
