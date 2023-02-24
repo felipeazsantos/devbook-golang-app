@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"devbook-golang-app/api/autenticacao"
 	"devbook-golang-app/api/seguranca"
 	"devbook-golang-app/api/src/banco"
 	"devbook-golang-app/api/src/modelos"
@@ -10,6 +9,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 //Login é responsável por autenticar um usuáiro na API
@@ -45,11 +45,15 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	/*
 	token, erro := autenticacao.CriarToken(usuarioSalvoNoBanco.ID)
 	if erro != nil {
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
-	}
+	}*/
 
-	w.Write([]byte(token))
+	usuarioID := strconv.FormatUint(usuarioSalvoNoBanco.ID, 10)
+
+	respostas.JSON(w, http.StatusOK, modelos.DadosAutenticacao{usuarioID, "OK"})
+
 }
