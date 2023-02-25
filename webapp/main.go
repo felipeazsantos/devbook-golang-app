@@ -10,6 +10,17 @@ import (
 	"net/http"
 )
 
+/*
+func init() {
+	hashKey := hex.EncodeToString(securecookie.GenerateRandomKey(16))
+	fmt.Println(hashKey)
+
+	blockKey := hex.EncodeToString(securecookie.GenerateRandomKey(16))
+	fmt.Println(blockKey)
+}
+*/
+
+
 func main() {
 	config.Carregar()
 	cookies.Configurar()
