@@ -2,13 +2,13 @@ package autenticacao
 
 import (
 	"devbook-golang-app/api/src/config"
+	"errors"
 	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
-	"errors"
-	"strconv"
 )
 
 //CriarToken gera uma string de autenticação com permissões para determinado usuário
@@ -18,7 +18,7 @@ func CriarToken(usuarioId uint64) (string, error) {
 	permissoes["exp"] = time.Now().Add(time.Hour * 6).Unix()
 	permissoes["usuarioId"] = usuarioId
 	token := jwt.NewWithClaims(jwt.SigningMethodES256, permissoes)
-	return token.SignedString(config.SecretKey) //secret
+	return token.SignedString("Secret") //secret
 }
 
 // ValidarToken verifica o token passado na requisição é valido
