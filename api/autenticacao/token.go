@@ -1,7 +1,6 @@
 package autenticacao
 
 import (
-	"devbook-golang-app/api/src/config"
 	"errors"
 	"fmt"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -9,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"devbook-golang-app/api/src/config"
 )
 
 //CriarToken gera uma string de autenticação com permissões para determinado usuário
@@ -18,13 +18,13 @@ func CriarToken(usuarioId uint64) (string, error) {
 	permissoes["exp"] = time.Now().Add(time.Hour * 6).Unix()
 	permissoes["usuarioId"] = usuarioId
 	token := jwt.NewWithClaims(jwt.SigningMethodES256, permissoes)
-	return token.SignedString("Secret") //secret
+	return token.SignedString(config.SecretKey)
 }
 
 // ValidarToken verifica o token passado na requisição é valido
 func ValidarToken(r *http.Request) error {
-	tokenSring := extrairToken(r)
-	token, erro := jwt.Parse(tokenSring, retornarChaveDeVerificacao)
+	tokenString := extrairToken(r)
+	token, erro := jwt.Parse(tokenString, retornarChaveDeVerificacao)
 	if erro != nil {
 		return erro
 	}
@@ -38,8 +38,8 @@ func ValidarToken(r *http.Request) error {
 
 //ExtrairUsuarioID retorna o usuarioID que está salvo no token
 func ExtrairUsuarioID(r *http.Request) (uint64, error) {
-	tokenSring := extrairToken(r)
-	token, erro := jwt.Parse(tokenSring, retornarChaveDeVerificacao)
+	tokenString := extrairToken(r)
+	token, erro := jwt.Parse(tokenString, retornarChaveDeVerificacao)
 	if erro != nil {
 		return 0, erro
 	}

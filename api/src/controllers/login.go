@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"fmt"
 )
 
 //Login é responsável por autenticar um usuáiro na API
