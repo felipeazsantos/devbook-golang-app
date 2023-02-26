@@ -68,7 +68,7 @@ func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publica
 func (repositorio Publicacoes) Buscar(usuarioID uint64) ([]modelos.Publicacao, error) {
 	linhas, erro := repositorio.db.Query(`
     select distinct p.*, u.nick from publicacoes p 
-    inner join usuarios u on u.id = p.author_id
+    inner join usuarios u on u.id = p.autor_id
     inner join seguidores s on p.autor_id = s.usuario_id
     where p.autor_id = ? or s.seguidor_id = ?
 	order by 1 desc
