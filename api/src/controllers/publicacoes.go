@@ -22,6 +22,8 @@ func CriarPublicacao(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+
+
 	corpoDaRequisicao, erro := ioutil.ReadAll(r.Body)
 	if erro != nil {
 		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
