@@ -21,6 +21,7 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
@@ -28,23 +29,27 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprintf("%s/%s", config.APIUrl, "login")
 	response, erro := http.Post(url, "application/json", bytes.NewBuffer(usuario))
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.JSON(w, http.StatusInternalServerError, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 	defer response.Body.Close()
 
 	if response.StatusCode >= 400 {
+		fmt.Println(response.StatusCode)
 		respostas.TratarStatusCodeDeErro(w, response)
 		return
 	}
 
 	var dadosAutenticacao modelos.DadosAutenticacao
 	if erro = json.NewDecoder(response.Body).Decode(&dadosAutenticacao); erro != nil {
+		fmt.Println(erro)
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
 	if erro = cookies.Salvar(w, dadosAutenticacao.ID, dadosAutenticacao.Token); erro != nil {
+		fmt.Println(erro)
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
