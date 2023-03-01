@@ -36,9 +36,9 @@
             <div class="col-sm-12 col-md-7 col-lg-7 col-xl-7">
                 <!-- Publicações -->
                 {{ range . }}
-                    <div>
+                    <div class="mt-4">
                         <div class="card">
-                            <h5 class="card-header">Featured</h5>
+                            <h5 class="card-header">Publicação</h5>
                             <div class="card-body">
                                 <h5 class="card-title">{{ .Titulo }}</h5>
                                 <p class="card-text">{{ .Conteudo }}</p>
@@ -55,5 +55,7 @@
 
     {{ template "rodape" }}
     {{ template "scripts" }}
+
+    <script src="/assets/js/publicacoes.js"></script>
 </body>
 </html>

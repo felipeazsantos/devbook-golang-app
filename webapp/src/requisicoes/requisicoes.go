@@ -2,7 +2,6 @@ package requisicoes
 
 import (
 	"devbook-golang-app/webapp/src/cookies"
-	"fmt"
 	"io"
 	"net/http"
 )
@@ -16,7 +15,6 @@ func FazerRequisicaoComAutenticacao(r *http.Request, metodo, url string, dados i
 
 	cookie, _ := cookies.Ler(r)
 	request.Header.Add("Authorization", "Bearer " + cookie["token"])
-	fmt.Println(cookie["token"])
 
 	client := &http.Client{}
 	response, erro := client.Do(request)
