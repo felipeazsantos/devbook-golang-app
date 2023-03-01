@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"devbook-golang-app/webapp/src/config"
+	"devbook-golang-app/webapp/src/cookies"
 	"devbook-golang-app/webapp/src/modelos"
 	"devbook-golang-app/webapp/src/requisicoes"
 	"devbook-golang-app/webapp/src/respostas"
@@ -9,6 +10,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 //CarregarTelaDeLogin vai carregar a tela de login
@@ -42,5 +44,14 @@ func CarregarPaginaPrincipal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.ExecutarTemplate(w, "home.html", publicacoes)
+	cookie, _ := cookies.Ler(r)
+	usuarioID, _ := strconv.ParseUint(cookie["id"], 10,64)
+
+	utils.ExecutarTemplate(w, "home.html", struct {
+		Publicacoes []modelos.Publicacao
+		UsuarioID uint64
+	}{
+		publicacoes,
+		usuarioID,
+	})
 }
