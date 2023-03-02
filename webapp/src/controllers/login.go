@@ -21,7 +21,6 @@ func FazerLogin(w http.ResponseWriter, r *http.Request) {
 	})
 
 	if erro != nil {
-		fmt.Println("Teste")
 		fmt.Println(erro)
 		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
 		return
