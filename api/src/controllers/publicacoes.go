@@ -8,6 +8,7 @@ import (
 	"devbook-golang-app/api/src/respostas"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
@@ -114,6 +115,7 @@ func BuscarPublicacao(w http.ResponseWriter, r *http.Request) {
 func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 	usuarioID, erro := autenticacao.ExtrairUsuarioID(r)
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusUnauthorized, erro)
 		return
 	}
@@ -121,12 +123,14 @@ func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 	parametros := mux.Vars(r)
 	publicacaoID, erro := strconv.ParseUint(parametros["publicacaoId"], 10, 64)
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
 		return
 	}
 
 	db, erro := banco.Conectar()
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
@@ -135,33 +139,39 @@ func AtualizarPublicacao(w http.ResponseWriter, r *http.Request) {
 	repositorio := repositorios.NovoRepositorioDePublicacoes(db)
 	PublicacaoSalvaNoBanco, erro := repositorio.BuscarPorID(publicacaoID)
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
 
 	if PublicacaoSalvaNoBanco.AutorID != usuarioID {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusForbidden, errors.New("Não é possível atualizar uma publicação que não seja sua"))
 		return
 	}
 
 	corpoDaRequisicao, erro := ioutil.ReadAll(r.Body)
 	if erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
 		return
 	}
 
 	var publicacao modelos.Publicacao
 	if erro = json.Unmarshal(corpoDaRequisicao, &publicacao); erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusBadRequest, erro)
 		return
 	}
 
 	if erro = publicacao.Preparar(); erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusBadRequest, erro)
 		return
 	}
 
 	if erro = repositorio.Atualizar(publicacaoID, publicacao); erro != nil {
+		fmt.Println(erro)
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
