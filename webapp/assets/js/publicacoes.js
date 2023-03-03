@@ -1,6 +1,6 @@
 $("#nova-publicacao").on("submit", criarPublicacao);
-$(".curtir-publicacao").on("click", ".curtir-publicacao", curtirPublicacao);
-$(".curtir-publicacao").on("click", ".descurtir-publicacao", descurtirPublicacao);
+$(".curtir-publicacao").on("click",  curtirPublicacao);
+$(".descurtir-publicacao").on("click", descurtirPublicacao);
 
 function criarPublicacao(evento) {
     evento.preventDefault()
@@ -20,7 +20,7 @@ function criarPublicacao(evento) {
 }
 
 function curtirPublicacao(evento) {
-    evento.preventDefault()
+     evento.preventDefault()
 
     const elementoClicado = $(evento.target);
     const publicacaoId = elementoClicado.closest("div").data("publicacao-id");
@@ -61,8 +61,8 @@ function descurtirPublicacao(evento) {
         const quantidadeDeCurtidas = parseInt(contadorDeCurtidas.text());
         contadorDeCurtidas.text(quantidadeDeCurtidas - 1);
 
-        elementoClicado.removeClass('text-danger');
         elementoClicado.removeClass('descurtir-publicacao');
+        elementoClicado.removeClass('text-danger');
         elementoClicado.addClass('curtir-publicacao');
     }).fail(function () {
         alert("Erro ao curtir a publicação!");
