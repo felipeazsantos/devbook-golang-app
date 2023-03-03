@@ -39,7 +39,7 @@ func (repositorio Publicacoes) Criar(publicacao modelos.Publicacao) (uint64, err
 //BuscarPorID traz uma única publicação
 func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publicacao, error) {
 	linha, erro := repositorio.db.Query(
-		`select p,id, p.titulo, p.conteudo, p.autor_id, u.nick, p.curtidas, p.CriadoEm from usuarios
+		`select p.id, p.titulo, p.conteudo, p.autor_id, u.nick, p.curtidas, p.CriadoEm from usuarios u
 				inner join publicacoes p on u.id = p.autor_id 
 			    where p.id = ?`, publicacaoID)
 	if erro != nil {
