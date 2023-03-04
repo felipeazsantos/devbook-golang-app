@@ -4,6 +4,7 @@ import (
 	"devbook-golang-app/webapp/src/config"
 	"github.com/gorilla/securecookie"
 	"net/http"
+	"time"
 )
 
 var s *securecookie.SecureCookie
@@ -48,4 +49,15 @@ func Ler(r *http.Request) (map[string]string, error) {
 	}
 
 	return valores, nil
+}
+
+//Deletar remove os valores de autenticação armazenados no cookie
+func Deletar(w http.ResponseWriter) {
+	http.SetCookie(w, &http.Cookie{
+		Name: "dados",
+		Value: "",
+		Path: "/",
+		HttpOnly: true,
+		Expires: time.Unix(0, 0),
+	})
 }
