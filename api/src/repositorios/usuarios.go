@@ -203,8 +203,8 @@ func (repositorio usuarios) BuscarSeguidores(usuarioId uint64) ([]modelos.Usuari
 //BuscarSeguindo retorna todoso os usuários que um determinado usuário está seguindo
 func (repositorio usuarios) BuscarSeguindo(usuarioId uint64) ([]modelos.Usuario, error) {
 	linhas, erro := repositorio.db.Query(`
-		select u.id, u.nome, u.nick, u.email, u.CriadoEm from usuario u
-		inner join seguidores on u.id = s.usuario_id
+		select u.id, u.nome, u.nick, u.email, u.CriadoEm from usuarios u
+		inner join seguidores s on u.id = s.usuario_id
         where s.seguidor_id = ?
 	`, usuarioId)
 
