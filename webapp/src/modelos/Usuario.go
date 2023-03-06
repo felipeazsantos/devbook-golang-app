@@ -4,6 +4,7 @@ import (
 	"devbook-golang-app/webapp/src/config"
 	"devbook-golang-app/webapp/src/requisicoes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -32,6 +33,48 @@ func BuscarUsuarioCompleto(usuarioID uint64, r *http.Request) (Usuario, error) {
 	go BuscarSeguidores(canalSeguidores, usuarioID, r)
 	go BuscarSeguindo(canalSeguindo, usuarioID, r)
 	go BuscarPublicacoes(canalPublicacoes, usuarioID, r)
+
+	var (
+		usuario Usuario
+		seguidores []Usuario
+		seguindo []Usuario
+		publicacoes []Publicacao
+	)
+
+	for i := 0; i < 4; i++ {
+		select {
+			case usuarioCarregado := <-canalUsuario:
+				if usuarioCarregado.ID == 0 {
+					return Usuario{}, errors.New("Erro ao buscar o usuário")
+				}
+
+				usuario = usuarioCarregado
+			case seguidoresCarregadores := <-canalSeguidores:
+				if seguidoresCarregadores == nil {
+					return Usuario{}, errors.New("Erro ao buscar os seguidores")
+				}
+
+				seguidores = seguidoresCarregadores
+			case seguindoCarregados := <- canalSeguindo:
+				if seguindoCarregados == nil {
+					return Usuario{}, errors.New("Erro ao buscar quem o usuário está seguindo")
+				}
+
+				seguindo = seguindoCarregados
+			case publicacoesCarregadas := <-canalPublicacoes:
+				if publicacoesCarregadas == nil {
+					return Usuario{}, errors.New("Erro ao buscar as publicações do usuário")
+				}
+
+				publicacoes = publicacoesCarregadas
+		}
+	}
+
+	usuario.Seguidores = seguidores
+	usuario.Seguindo = seguindo
+	usuario.Publicacoes = publicacoes
+
+	return usuario, nil
 }
 
 //BuscarDadosDoUsuario chama a API para buscar os dados base do usuário
