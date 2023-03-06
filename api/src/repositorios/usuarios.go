@@ -161,7 +161,7 @@ func (repositorio usuarios) Seguir(usuarioId, SeguidorId uint64) error {
 
 //PararDeSeguir permite um usuário parar de seguir outro
 func (repositorio usuarios) PararDeSeguir(usuarioId, SeguidorId uint64) error {
-	statement, erro := repositorio.db.Prepare("DELETE FROM seguidores where usuarioId = ? and seguidorId = ?")
+	statement, erro := repositorio.db.Prepare("DELETE FROM seguidores where usuario_id = ? and seguidor_id = ?")
 	if erro != nil {
 		return erro
 	}
@@ -180,7 +180,7 @@ func (repositorio usuarios) BuscarSeguidores(usuarioId uint64) ([]modelos.Usuari
     	select u.id, u.nome, u.nick, u.email, u.CriadoEm from usuarios u
 		inner join seguidores s on 
 		u.id = s.seguidor_id
-		where u.id = ?
+		where s.usuario_id = ?
     `, usuarioId)
 
 	if erro != nil {
