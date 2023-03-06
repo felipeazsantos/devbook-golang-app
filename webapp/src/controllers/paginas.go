@@ -112,11 +112,23 @@ func CarregarPaginaDeUsuarios(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var usuarios = []modelos.Usuario
+	var usuarios []modelos.Usuario
 	if erro = json.NewDecoder(response.Body).Decode(&usuarios); erro != nil {
 		respostas.JSON(w, http.StatusUnprocessableEntity, respostas.ErroAPI{Erro: erro.Error()})
 		return
 	}
 
 	utils.ExecutarTemplate(w, "usuarios.html", usuarios)
+}
+
+//CarregarPerfilDoUsuario carrega a página do perfil do usuário
+func CarregarPerfilDoUsuario(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	if erro != nil {
+		respostas.JSON(w, http.StatusBadRequest, respostas.ErroAPI{Erro: erro.Error()})
+		return
+	}
+
+	usuario, erro := modelos.BuscarUsuarioCompleto(usuarioID, r)
 }
